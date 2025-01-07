@@ -20,11 +20,11 @@ for iface in /sys/class/net/*; do
 done
 
 # 网络设置
-if [ "$count" -eq 1 ]; then
-  uci set network.lan.proto='dhcp'
-elif [ "$count" -gt 1 ]; then
-  uci set network.lan.ipaddr='192.168.100.1'
-fi
+#if [ "$count" -eq 1 ]; then
+#  uci set network.lan.proto='dhcp'
+#elif [ "$count" -gt 1 ]; then
+#  uci set network.lan.ipaddr='192.168.100.1'
+#fi
 
 uci set network.lan.ipaddr='192.168.1.2'
 uci set network.lan.gateway='192.168.1.1'
