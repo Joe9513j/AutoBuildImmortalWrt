@@ -26,6 +26,10 @@ elif [ "$count" -gt 1 ]; then
   uci set network.lan.ipaddr='192.168.100.1'
 fi
 
+uci set network.lan.ipaddr='192.168.1.2'
+uci set network.lan.gateway='192.168.1.1'
+uci set network.lan.dns='223.5.5.5 8.8.8.8'
+
 # 设置所有网口可访问网页终端
 uci delete ttyd.@ttyd[0].interface
 
@@ -35,7 +39,7 @@ uci commit
 
 # 设置编译作者信息
 FILE_PATH="/etc/openwrt_release"
-NEW_DESCRIPTION="Compiled by wukongdaily"
+NEW_DESCRIPTION="Compiled by Joe 2004"
 sed -i "s/DISTRIB_DESCRIPTION='[^']*'/DISTRIB_DESCRIPTION='$NEW_DESCRIPTION'/" "$FILE_PATH"
 
 exit 0
