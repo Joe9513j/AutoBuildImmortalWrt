@@ -16,7 +16,7 @@ PACKAGES="$PACKAGES luci-i18n-firewall-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-filebrowser-go-zh-cn"
 PACKAGES="$PACKAGES luci-app-argon-config"
 PACKAGES="$PACKAGES luci-i18n-argon-config-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-opkg-zh-cn"
+PACKAGES="$PACKAGES luci-app-opkg"
 PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
 PACKAGES="$PACKAGES luci-app-openclash"
@@ -44,7 +44,7 @@ PACKAGES="$PACKAGES python3"
 PACKAGES="$PACKAGES python3-pip"
 PACKAGES="$PACKAGES python3-yaml"
 PACKAGES="$PACKAGES python3-flask"
-PACKAGES="$PACKAGES python3-python3-aiohttp"
+#PACKAGES="$PACKAGES python3-python3-aiohttp"
 
 # 判断是否需要编译 Docker 插件
 if [ "$INCLUDE_DOCKER" = "yes" ]; then
