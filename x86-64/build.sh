@@ -45,6 +45,8 @@ PACKAGES="$PACKAGES python3-pip"
 PACKAGES="$PACKAGES python3-yaml"
 PACKAGES="$PACKAGES python3-flask"
 PACKAGES="$PACKAGES python3-aiohttp"
+PACKAGES="$PACKAGES shadow-utils"
+PACKAGES="$PACKAGES shadow-chpasswd"
 
 # 判断是否需要编译 Docker 插件
 if [ "$INCLUDE_DOCKER" = "yes" ]; then
