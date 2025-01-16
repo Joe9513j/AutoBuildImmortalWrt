@@ -1,22 +1,8 @@
 #!/bin/bash
-# Log file for debugging
-LOGFILE="/tmp/uci-defaults-log.txt"
-echo "Starting 99-custom.sh at $(date)" >> $LOGFILE
+
 echo "编译固件大小为: $PROFILE MB"
 echo "Include Docker: $INCLUDE_DOCKER"
 
-echo "Create pppoe-settings"
-mkdir -p  /home/build/immortalwrt/files/etc/config
-
-# 创建pppoe配置文件 yml传入环境变量ENABLE_PPPOE等 写入配置文件 供99-custom.sh读取
-cat << EOF > /home/build/immortalwrt/files/etc/config/pppoe-settings
-enable_pppoe=${ENABLE_PPPOE}
-pppoe_account=${PPPOE_ACCOUNT}
-pppoe_password=${PPPOE_PASSWORD}
-EOF
-
-echo "cat pppoe-settings"
-cat /home/build/immortalwrt/files/etc/config/pppoe-settings
 # 输出调试信息
 echo "$(date '+%Y-%m-%d %H:%M:%S') - 开始编译..."
 
@@ -27,19 +13,42 @@ PACKAGES=""
 PACKAGES="$PACKAGES curl"
 PACKAGES="$PACKAGES luci-i18n-diskman-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-firewall-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-filebrowser-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-filebrowser-go-zh-cn"
 PACKAGES="$PACKAGES luci-app-argon-config"
 PACKAGES="$PACKAGES luci-i18n-argon-config-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-opkg-zh-cn"
+PACKAGES="$PACKAGES luci-app-opkg"
 PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
 PACKAGES="$PACKAGES luci-app-openclash"
 PACKAGES="$PACKAGES luci-i18n-homeproxy-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-ddns-go-zh-cn"
+PACKAGES="$PACKAGES luci-proto-wireguard"
 PACKAGES="$PACKAGES openssh-sftp-server"
+PACKAGES="$PACKAGES luci-app-vlmcsd"
 # 增加几个必备组件 方便用户安装iStore
 PACKAGES="$PACKAGES fdisk"
 PACKAGES="$PACKAGES script-utils"
 PACKAGES="$PACKAGES luci-i18n-samba4-zh-cn"
+PACKAGES="$PACKAGES nano"
+PACKAGES="$PACKAGES 7z"
+PACKAGES="$PACKAGES pv"
+PACKAGES="$PACKAGES gzip"
+PACKAGES="$PACKAGES curl"
+PACKAGES="$PACKAGES yq"
+PACKAGES="$PACKAGES jq"
+PACKAGES="$PACKAGES coreutils-nohup"
+PACKAGES="$PACKAGES coreutils"
+PACKAGES="$PACKAGES qrencode"
+PACKAGES="$PACKAGES busybox"
+PACKAGES="$PACKAGES python3"
+PACKAGES="$PACKAGES python3-pip"
+PACKAGES="$PACKAGES python3-yaml"
+PACKAGES="$PACKAGES python3-flask"
+PACKAGES="$PACKAGES python3-aiohttp"
+PACKAGES="$PACKAGES bash"
+PACKAGES="$PACKAGES uci"
+PACKAGES="$PACKAGES shadow"
+PACKAGES="$PACKAGES shadow-utils"
+PACKAGES="$PACKAGES shadow-chpasswd"
 
 # 判断是否需要编译 Docker 插件
 if [ "$INCLUDE_DOCKER" = "yes" ]; then
