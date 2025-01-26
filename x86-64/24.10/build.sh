@@ -20,27 +20,42 @@ cat /home/build/immortalwrt/files/etc/config/pppoe-settings
 # 输出调试信息
 echo "$(date '+%Y-%m-%d %H:%M:%S') - 开始编译..."
 
-
-
 # 定义所需安装的包列表 下列插件你都可以自行删减
 PACKAGES=""
 PACKAGES="$PACKAGES curl"
 PACKAGES="$PACKAGES luci-i18n-diskman-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-firewall-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-filebrowser-zh-cn"
 PACKAGES="$PACKAGES luci-app-argon-config"
 PACKAGES="$PACKAGES luci-i18n-argon-config-zh-cn"
-#24.10
-PACKAGES="$PACKAGES luci-i18n-package-manager-zh-cn"
+PACKAGES="$PACKAGES luci-app-opkg"
 PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
-PACKAGES="$PACKAGES luci-app-openclash"
 PACKAGES="$PACKAGES luci-i18n-homeproxy-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-ddns-go-zh-cn"
+PACKAGES="$PACKAGES luci-proto-wireguard"
 PACKAGES="$PACKAGES openssh-sftp-server"
+PACKAGES="$PACKAGES luci-app-vlmcsd"
 # 增加几个必备组件 方便用户安装iStore
 PACKAGES="$PACKAGES fdisk"
 PACKAGES="$PACKAGES script-utils"
 PACKAGES="$PACKAGES luci-i18n-samba4-zh-cn"
+PACKAGES="$PACKAGES nano"
+PACKAGES="$PACKAGES 7z"
+PACKAGES="$PACKAGES pv"
+PACKAGES="$PACKAGES gzip"
+PACKAGES="$PACKAGES curl"
+PACKAGES="$PACKAGES yq"
+PACKAGES="$PACKAGES jq"
+PACKAGES="$PACKAGES coreutils-nohup"
+PACKAGES="$PACKAGES coreutils"
+PACKAGES="$PACKAGES qrencode"
+PACKAGES="$PACKAGES busybox"
+PACKAGES="$PACKAGES python3"
+PACKAGES="$PACKAGES python3-pip"
+PACKAGES="$PACKAGES python3-yaml"
+PACKAGES="$PACKAGES python3-flask"
+PACKAGES="$PACKAGES python3-aiohttp"
+PACKAGES="$PACKAGES bash"
+PACKAGES="$PACKAGES uci"
+PACKAGES="$PACKAGES shadow"
 
 # 判断是否需要编译 Docker 插件
 if [ "$INCLUDE_DOCKER" = "yes" ]; then
