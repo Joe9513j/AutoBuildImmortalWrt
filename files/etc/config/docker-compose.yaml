@@ -1,8 +1,1 @@
-services:
-  allinone:
-    image: youshandefeiyang/allinone
-    container_name: allinone
-    privileged: true
-    restart: always
-    network_mode: host
-    command: -tv=true -aesKey=o02ol47n1skk62w507syqoy22bozmbov -userid=6838114619 -token=14adb02169637dad04e28a69d62409a2fa502c7c82e2f4e65dc9291b12950bbcee89f4d727a53a465f60c01ca11c880e0ca281a525e1cb1ac036a67cbf6a4e29bd321736fe6817
+
