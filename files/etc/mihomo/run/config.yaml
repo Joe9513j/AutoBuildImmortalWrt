@@ -1,0 +1,265 @@
+proxy-providers:
+  Airport_01:
+    type: http
+    interval: 1800
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: "\U0001F7E2 直连"
+    url: "http://127.0.0.1:5004/get_data"
+unified-delay: true
+tcp-concurrent: true
+global-client-fingerprint: chrome
+sniffer:
+  enable: true
+  skip-domain:
+    - "Mijia Cloud"
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
+    - "+.apple.com"
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    HTTP:
+      override-destination: true
+      ports:
+        - 80
+        - 8080
+    TLS:
+      override-destination: true
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      override-destination: true
+      ports:
+        - 443
+        - 8443
+proxies:
+  - name: "\U0001F7E2 直连"
+    type: direct
+    udp: true
+pr: &pr
+  type: select
+  proxies: ["\U0001F680 节点选择", ♻️ 自动选择, "\U0001F52F 狮城故转", "\U0001F52F 台湾故转", "\U0001F1F8\U0001F1EC 狮城节点", "\U0001F1F5\U0001F1F1 波兰节点", "\U0001F1F9\U0001F1FC 台湾节点", "\U0001F1E9\U0001F1EA 德国节点", "\U0001F1EB\U0001F1F7 法国节点", "\U0001F1EB\U0001F1F7 法国自动", "\U0001F1FA\U0001F1F8 美国节点", "\U0001F310 全部节点", "\U0001F7E2 直连"]
+proxy-groups:
+  - {name: "\U0001F680 节点选择", type: select, proxies: [♻️ 自动选择, "\U0001F52F 狮城故转", "\U0001F52F 台湾故转", "\U0001F1F8\U0001F1EC 狮城节点", "\U0001F1F5\U0001F1F1 波兰节点", "\U0001F1F9\U0001F1FC 台湾节点", "\U0001F1E9\U0001F1EA 德国节点", "\U0001F1EB\U0001F1F7 法国节点", "\U0001F1EB\U0001F1F7 法国自动", "\U0001F1FA\U0001F1F8 美国节点", "\U0001F310 全部节点", "\U0001F7E2 直连"]}
+  - {name: "\U0001F4F9 YouTube", !!merge <<: *pr}
+  - {name: "\U0001F340 Google", !!merge <<: *pr}
+  - {name: "\U0001F916 ChatGPT", !!merge <<: *pr}
+  - {name: "\U0001F468\U0001F3FF‍\U0001F4BB GitHub", !!merge <<: *pr}
+  - {name: "\U0001F42C OneDrive", !!merge <<: *pr}
+  - {name: "\U0001FA9F Microsoft", !!merge <<: *pr}
+  - {name: "\U0001F3B5 TikTok", !!merge <<: *pr}
+  - {name: "\U0001F4F2 Telegram", !!merge <<: *pr}
+  - {name: "\U0001F3A5 NETFLIX", !!merge <<: *pr}
+  - {name: ✈️ Speedtest, !!merge <<: *pr}
+  - {name: "\U0001F4B6 PayPal", type: select, proxies: ["\U0001F7E2 直连", "\U0001F680 节点选择"]}
+  - {name: "\U0001F34E Apple", type: select, proxies: ["\U0001F7E2 直连", "\U0001F680 节点选择"]}
+  - {name: "\U0001F3AF 全球直连", type: select, proxies: ["\U0001F7E2 直连", "\U0001F680 节点选择"]}
+  - {name: "\U0001F41F 漏网之鱼", !!merge <<: *pr}
+  - {name: "\U0001F1F8\U0001F1EC 狮城节点", type: select, include-all: true, filter: "(?i)狮|sg"}
+  - {name: "\U0001F1F5\U0001F1F1 波兰节点", type: select, include-all: true, filter: "(?i)波|pl"}
+  - {name: "\U0001F1F9\U0001F1FC 台湾节点", type: select, include-all: true, filter: "(?i)台|tw"}
+  - {name: "\U0001F1E9\U0001F1EA 德国节点", type: select, include-all: true, filter: "(?i)德|de"}
+  - {name: "\U0001F1EB\U0001F1F7 法国节点", type: select, include-all: true, filter: "(?i)法|fr"}
+  - {name: "\U0001F1FA\U0001F1F8 美国节点", type: url-test, include-all: true, filter: "(?i)美|US|法国 104|法国 108"}
+  - {name: "\U0001F1EB\U0001F1F7 法国自动", type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "(?i)法国 195|法国 207"}
+  - {name: "\U0001F52F 狮城故转", type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(台|TW|(?i)Tai))^((?!(日|德|新|美|韩|波|法)).)*$"}
+  - {name: "\U0001F52F 台湾故转", type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?=.*(新|SG|(?i)Sing))^((?!(日|德|台|美|韩|波|法)).)*$"}
+  - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^((?!(直连)).)*$"}
+  - {name: "\U0001F310 全部节点", type: select, include-all: true}
+rules:
+  - "DOMAIN-SUFFIX,a.nel.cloudflare.com,\U0001F1FA\U0001F1F8 美国节点"
+  - "DOMAIN-SUFFIX,engage.cloudflareclient.com,\U0001F1FA\U0001F1F8 美国节点"
+  - "DOMAIN-SUFFIX,api.cloudflareclient.com,\U0001F1FA\U0001F1F8 美国节点"
+  - "DOMAIN-SUFFIX,consumer-masque.cloudflareclient.com,\U0001F1FA\U0001F1F8 美国节点"
+  - "DOMAIN-SUFFIX,litvpc-hichannel.cdn.hinet.net,\U0001F1F9\U0001F1FC 台湾节点"
+  - "DOMAIN-SUFFIX,akamaized.net,\U0001F1F9\U0001F1FC 台湾节点"
+  - "DOMAIN-SUFFIX,ofiii.com,\U0001F1F9\U0001F1FC 台湾节点"
+  - "DOMAIN-SUFFIX,akamaized.net,\U0001F1F9\U0001F1FC 台湾节点"
+  - "RULE-SET,private_domain,\U0001F7E2 直连"
+  - "RULE-SET,direct1,\U0001F7E2 直连"
+  - "RULE-SET,apple_domain,\U0001F34E Apple"
+  - "RULE-SET,proxylite,\U0001F680 节点选择"
+  - "RULE-SET,ai,\U0001F916 ChatGPT"
+  - "RULE-SET,github_domain,\U0001F468\U0001F3FF‍\U0001F4BB GitHub"
+  - "RULE-SET,youtube_domain,\U0001F4F9 YouTube"
+  - "RULE-SET,google_domain,\U0001F340 Google"
+  - "RULE-SET,onedrive_domain,\U0001F42C OneDrive"
+  - "RULE-SET,microsoft_domain,\U0001FA9F Microsoft"
+  - "RULE-SET,tiktok_domain,\U0001F3B5 TikTok"
+  - RULE-SET,speedtest_domain,✈️ Speedtest
+  - "RULE-SET,telegram_domain,\U0001F4F2 Telegram"
+  - "RULE-SET,netflix_domain,\U0001F3A5 NETFLIX"
+  - "RULE-SET,paypal_domain,\U0001F4B6 PayPal"
+  - "RULE-SET,geolocation-!cn,\U0001F680 节点选择"
+  - "RULE-SET,cn_domain,\U0001F3AF 全球直连"
+  - "RULE-SET,google_ip,\U0001F340 Google,no-resolve"
+  - "RULE-SET,netflix_ip,\U0001F3A5 NETFLIX,no-resolve,no-resolve"
+  - "RULE-SET,telegram_ip,\U0001F4F2 Telegram,no-resolve"
+  - "RULE-SET,cn_ip,\U0001F3AF 全球直连"
+  - "MATCH,\U0001F41F 漏网之鱼"
+rule-anchor:
+  ip: &ip
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+  domain: &domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+  qcy: &qcy
+    type: http
+    interval: 86400
+    behavior: domain
+    format: text
+  class: &class
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+rule-providers:
+  private_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
+  direct1:
+    <<: *class
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/DavidRose326/rule/refs/heads/master/Direct.list"
+  proxylite:
+    <<: *class
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/DavidRose326/rule/refs/heads/master/ProxyLite.list"
+  ai:
+    <<: *class
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/DavidRose326/rule/refs/heads/master/AI.list"
+  youtube_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"
+  google_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"
+  github_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"
+  telegram_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"
+  netflix_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"
+  paypal_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"
+  onedrive_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/onedrive.mrs"
+  microsoft_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"
+  apple_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-cn.mrs"
+  speedtest_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/ookla-speedtest.mrs"
+  tiktok_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"
+  gfw_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"
+  geolocation-!cn:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"
+  cn_domain:
+    <<: *domain
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+  cn_ip:
+    <<: *ip
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"
+  google_ip:
+    <<: *ip
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"
+  telegram_ip:
+    <<: *ip
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"
+  netflix_ip:
+    <<: *ip
+    url: "https://7.joev.nyc.mn/gh/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"
+log-level: warning
+mode: rule
+find-process-mode: strict
+keep-alive-idle: 600
+keep-alive-interval: 15
+ipv6: true
+external-ui: ui
+external-ui-name: yacd
+external-ui-url: https://7.joev.nyc.mn/gh/https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip
+external-controller: 0.0.0.0:9090
+secret: "12345678"
+profile:
+  store-selected: true
+  store-fake-ip: true
+allow-lan: true
+port: 7888
+socks-port: 7889
+mixed-port: 7890
+redir-port: 7891
+tproxy-port: 7892
+tun:
+  enable: true
+  stack: gvisor
+  device: mihomo
+  mtu: 9000
+  gso: true
+  gso-max-size: 37280
+  endpoint-independent-nat: true
+  auto-route: false
+  auto-redirect: false
+  auto-detect-interface: false
+  dns-hijack: []
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  respect-rules: true
+  prefer-h3: true
+  ipv6: true
+  use-system-hosts: false
+  use-hosts: true
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - +.lan
+    - +.local
+    - geosite:cn
+    - private
+  default-nameserver:
+    - 223.5.5.5
+    - 218.85.152.99
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+  nameserver:
+    - https://dns.alidns.com/dns-query
+  nameserver-policy:
+    geosite:cn,private:
+      - https://dns.alidns.com/dns-query
+    geosite:geolocation-!cn:
+      - https://dns.cloudflare.com/dns-query
+      - https://dns.google/dns-query
+geodata-mode: true
+geodata-loader: memconservative
+geox-url:
+  geosite: https://7.joev.nyc.mn/gh/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
+  mmdb: https://7.joev.nyc.mn/gh/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.metadb
+  geoip: https://7.joev.nyc.mn/gh/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat
+  asn: https://7.joev.nyc.mn/gh/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb
+geo-auto-update: true
+geo-update-interval: 24
+interface-name: pppoe-wan
