@@ -55,15 +55,15 @@ else
    fi
 
    uci set network.lan.proto='static'
-   uci set network.lan.ipaddr='192.168.1.1'
+   uci set network.lan.ipaddr='192.168.100.1'
    uci set network.lan.netmask='255.255.255.0'
    uci del dhcp.lan.ra_slaac
    uci set dhcp.lan.limit='100'
    uci set dhcp.lan.leasetime='24h'
    uci set dhcp.lan.force='1'
    uci set dhcp.lan.netmask='255.255.255.0'
-   uci add_list dhcp.lan.dhcp_option='6,192.168.1.1'
-   echo "set 192.168.1.1 at $(date)" >> $LOGFILE
+   uci add_list dhcp.lan.dhcp_option='6,192.168.100.1'
+   echo "set 192.168.100.1 at $(date)" >> $LOGFILE
    echo "print enable_pppoe value=== $enable_pppoe" >> $LOGFILE
    if [ "$enable_pppoe" = "yes" ]; then
       echo "PPPoE is enabled at $(date)" >> $LOGFILE
